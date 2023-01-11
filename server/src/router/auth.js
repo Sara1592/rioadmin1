@@ -1,0 +1,20 @@
+const { Router } = require('express')
+const {getUsers, register, login, logout, protected, getCollege, getRegister, collegereg, collogin, userregister} = require('../controllers/auth')
+const {validationMiddleware} = require('../middlewares/validations-middleware')
+const { registerValidation, loginValidation,  userregisterValidation } = require('../validators/auth')
+const { collegeregisterValidation, collegeloginValidation} = require('../validators/auth')
+const { userAuth } = require('../middlewares/auth-middleware')
+const router = Router()
+
+router.get('/get-users', getUsers)
+router.get('/get-register', getRegister)
+router.get('/protected', userAuth, protected)
+router.post('/register', registerValidation, validationMiddleware, register)
+router.post('/login', loginValidation, validationMiddleware, login)
+router.get('/logout', logout)
+router.get('/get-coll', getCollege)
+router.post('/colregister', collegeregisterValidation, collegereg)
+router.post('/collogin', collegeloginValidation, collogin)
+router.post('/userregister', userregisterValidation, validationMiddleware, userregister)
+
+module.exports = router
